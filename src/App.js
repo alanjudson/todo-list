@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import MomentUtils from "@date-io/moment";
 
-import logo from "./logo.svg";
 import "./App.css";
 
 import Header from "./Header";
