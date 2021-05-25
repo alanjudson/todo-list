@@ -1,6 +1,10 @@
 import React, { useState } from "react";
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import MomentUtils from "@date-io/moment";
+
 import logo from "./logo.svg";
 import "./App.css";
+
 import Header from "./Header";
 import data from "./data.json";
 import TodoList from "./TodoList";
@@ -18,11 +22,16 @@ function App() {
     setTodoList(mapped);
   };
 
-  const addTask = (userInput) => {
+  const addTask = (userInput, date) => {
     let copy = [...todoList];
     copy = [
       ...copy,
-      { id: todoList.length + 1, task: userInput, complete: false },
+      {
+        id: todoList.length + 1,
+        task: userInput,
+        date: date,
+        complete: false,
+      },
     ];
     setTodoList(copy);
   };
@@ -33,16 +42,19 @@ function App() {
     });
     setTodoList(filtered);
   };
+
   return (
-    <div className="App">
-      <Header />
-      <TodoList
-        todoList={todoList}
-        handleToggle={handleToggle}
-        handleFilter={handleFilter}
-      />
-      <TodoForm addTask={addTask} />
-    </div>
+    <MuiPickersUtilsProvider utils={MomentUtils}>
+      <div className="App">
+        <Header />
+        <TodoList
+          todoList={todoList}
+          handleToggle={handleToggle}
+          handleFilter={handleFilter}
+        />
+        <TodoForm addTask={addTask} />
+      </div>
+    </MuiPickersUtilsProvider>
   );
 }
 
