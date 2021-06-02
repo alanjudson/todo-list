@@ -1,20 +1,31 @@
 import React from "react";
-import moment from "moment";
-function TodoItem({ todo, handleFilter, handleToggle }) {
+import { IconButton } from "@material-ui/core";
+import DeleteIcon from "@material-ui/icons/Delete";
+
+function TodoItem({ todo, handleFilter, handleToggle, deleteItem }) {
   const handleClick = (e, id) => {
     e.preventDefault();
     handleToggle(id);
   };
-  console.log(todo);
+  const time = `${todo.date._d.getHours()}:${todo.date._d.getMinutes()}`;
+
   return (
-    <div
-      className={todo.complete ? "strike" : ""}
-      onClick={(e) => {
-        handleClick(e, todo.id);
-      }}
-    >
-      {todo.task}
-      {todo.date ? todo.date._d.toDateString() : "no date"}
+    <div className="todo-item">
+      <div
+        className={todo.completed ? "strike" : ""}
+        onClick={(e) => {
+          handleClick(e, todo.id);
+        }}
+      >
+        {todo.task} | {todo.date._d.toDateString()} {time}
+      </div>
+      <IconButton
+        onClick={() => {
+          deleteItem(todo);
+        }}
+      >
+        <DeleteIcon className="delete-icon" fontSize="large" />
+      </IconButton>
     </div>
   );
 }

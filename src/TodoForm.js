@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { DatePicker, TimePicker, DateTimePicker } from "@material-ui/pickers";
+import ScheduleIcon from "@material-ui/icons/Schedule";
+import { IconButton, InputAdornment } from "@material-ui/core";
+import { DateTimePicker } from "@material-ui/pickers";
 import moment from "moment";
 
 function TodoForm({ addTask }) {
@@ -14,17 +16,31 @@ function TodoForm({ addTask }) {
     setUserInput("");
   };
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <input
-          value={userInput}
-          type="text"
-          onChange={handleChange}
-          placeholder="Enter task..."
-        />
-        <DatePicker value={date} onChange={setDate} />
-        <button>Submit</button>
-      </form>
+    <div className="todo-form-container">
+      <div className="todo-form-item">
+        <form className="todo-form-input" onSubmit={handleSubmit}>
+          <input
+            value={userInput}
+            type="text"
+            onChange={handleChange}
+            placeholder="Enter task..."
+          />
+          <DateTimePicker
+            value={date}
+            onChange={setDate}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton>
+                    <ScheduleIcon style={{ color: "white" }} />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+          <button>Submit</button>
+        </form>
+      </div>
     </div>
   );
 }

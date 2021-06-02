@@ -1,57 +1,111 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import MomentUtils from "@date-io/moment";
-
+import firebase from "@firebase/app";
+import "firebase/firestore";
 import "./App.css";
 
 import Header from "./Header";
-import data from "./data.json";
 import TodoList from "./TodoList";
 import TodoForm from "./TodoForm";
+import moment from "moment";
 
 function App() {
-  const [todoList, setTodoList] = useState(data);
+  const [todoList, setTodoList] = useState([]);
+  const [isLoading, setLoading] = useState(false);
+  const todosRef = firebase.firestore().collection("todos");
+
+  const getTodos = () => {
+    setLoading(true);
+    todosRef.orderBy("time").onSnapshot((querySnapshot) => {
+      const todos = [];
+      querySnapshot.forEach((doc) => {
+        console.log(doc.data().date.seconds);
+        const date = doc.data().date.seconds * 1000;
+        todos.push({
+          id: doc.id,
+          task: doc.data().task,
+          completed: doc.data().completed,
+          date: moment(date),
+        });
+      });
+      setTodoList(todos);
+      setLoading(false);
+    });
+  };
+
+  useEffect(() => {
+    getTodos();
+  }, []);
 
   const handleToggle = (id) => {
-    let mapped = todoList.map((task) => {
-      return task.id === id
-        ? { ...task, complete: !task.complete }
-        : { ...task };
+    console.log(id);
+    console.log(todoList);
+    todoList.map((task) => {
+      return task.id === id ? updateValue(task) : { ...task };
     });
-    setTodoList(mapped);
+  };
+  const deleteItem = (todo) => {
+    todosRef
+      .doc(todo.id)
+      .delete()
+      .then(function () {
+        console.log("Document successfully deleted!");
+      })
+      .catch(function (error) {
+        console.error("Error removing document: ", error);
+      });
+  };
+  const updateValue = (todo) => {
+    todosRef
+      .doc(todo.id)
+      .update({
+        id: todo.id,
+        task: todo.task,
+        date: todo.date._d,
+        completed: !todo.completed,
+      })
+      .then(function () {
+        console.log("Document successfully updated!");
+      })
+      .catch(function (error) {
+        console.error("Error updating document: ", error);
+      });
   };
 
   const addTask = (userInput, date) => {
-    let copy = [...todoList];
-    copy = [
-      ...copy,
-      {
-        id: todoList.length + 1,
-        task: userInput,
-        date: date,
-        complete: false,
-      },
-    ];
-    setTodoList(copy);
+    todosRef.doc().set({
+      task: userInput,
+      date: date._d,
+      complete: false,
+      time: new Date(),
+    });
   };
 
   const handleFilter = () => {
     let filtered = todoList.filter((task) => {
-      return !task.complete;
+      return !task.completed;
     });
     setTodoList(filtered);
   };
 
+  if (isLoading) {
+    return <h1>Loading</h1>;
+  }
+
   return (
     <MuiPickersUtilsProvider utils={MomentUtils}>
-      <div className="App">
+      <div className="App app-wrap">
         <Header />
-        <TodoList
-          todoList={todoList}
-          handleToggle={handleToggle}
-          handleFilter={handleFilter}
-        />
-        <TodoForm addTask={addTask} />
+        <div className="content">
+          <TodoForm addTask={addTask} />
+          <TodoList
+            todoList={todoList}
+            handleToggle={handleToggle}
+            handleFilter={handleFilter}
+            deleteItem={deleteItem}
+          />
+        </div>
       </div>
     </MuiPickersUtilsProvider>
   );

@@ -1,23 +1,32 @@
 import React from "react";
 import TodoItem from "./TodoItem";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
 
-function TodoList({ todoList, handleFilter, handleToggle }) {
+function TodoList({ todoList, handleFilter, handleToggle, deleteItem }) {
   return (
-    <div>
+    <TransitionGroup>
       {todoList.map((todo) => {
         return (
-          <TodoItem
+          <CSSTransition
             key={todo.id}
-            todo={todo}
-            handleToggle={handleToggle}
-            handleFilter={handleFilter}
-          />
+            timeout={300}
+            classNames="transition"
+            in={true}
+          >
+            <TodoItem
+              key={todo.id}
+              todo={todo}
+              handleToggle={handleToggle}
+              handleFilter={handleFilter}
+              deleteItem={deleteItem}
+            />
+          </CSSTransition>
         );
       })}
       <button style={{ margin: "20px" }} onClick={handleFilter}>
         Clear Completed
       </button>
-    </div>
+    </TransitionGroup>
   );
 }
 
