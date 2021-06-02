@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import ScheduleIcon from "@material-ui/icons/Schedule";
 import { IconButton, InputAdornment } from "@material-ui/core";
 import { DateTimePicker } from "@material-ui/pickers";
 import moment from "moment";
 
 function TodoForm({ addTask }) {
+  const todoInput = useRef(null);
   const [userInput, setUserInput] = useState("");
   const [date, setDate] = useState(moment());
   const handleChange = (e) => {
@@ -14,7 +15,9 @@ function TodoForm({ addTask }) {
     e.preventDefault();
     addTask(userInput, date);
     setUserInput("");
+    todoInput.current.focus();
   };
+
   return (
     <div className="todo-form-container">
       <div className="todo-form-item">
@@ -24,6 +27,7 @@ function TodoForm({ addTask }) {
             type="text"
             onChange={handleChange}
             placeholder="Enter task..."
+            ref={todoInput}
           />
           <DateTimePicker
             value={date}

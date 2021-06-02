@@ -77,16 +77,15 @@ function App() {
     todosRef.doc().set({
       task: userInput,
       date: date._d,
-      complete: false,
+      completed: false,
       time: new Date(),
     });
   };
 
   const handleFilter = () => {
-    let filtered = todoList.filter((task) => {
-      return !task.completed;
+    todoList.forEach((task) => {
+      return task.completed ? deleteItem(task) : null;
     });
-    setTodoList(filtered);
   };
 
   if (isLoading) {
