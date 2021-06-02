@@ -184,3 +184,7 @@ a.button {
   background-color: #2b2a26;
   transition: all 500ms ease-in;
 }
+
+div.todo-completed {
+  background-color: rgb(89, 89, 89);
+}

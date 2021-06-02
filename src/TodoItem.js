@@ -12,7 +12,7 @@ function TodoItem({ todo, handleFilter, handleToggle, deleteItem }) {
 
   return (
     <div
-      className="todo-item"
+      className={todo.completed ? "todo-completed todo-item" : "todo-item"}
       onClick={(e) => {
         handleClick(e, todo.id);
       }}
