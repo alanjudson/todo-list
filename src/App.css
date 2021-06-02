@@ -119,11 +119,6 @@ a.button {
   flex: 1 1 auto;
 }
 
-.todo-container {
-  display: flex;
-  flex-direction: column;
-}
-
 .todo-item {
   padding: 15px;
   margin: 5px;
@@ -135,20 +130,23 @@ a.button {
   justify-content: space-between;
 }
 
-.todo-form {
-  display: flex;
-  justify-content: space-between;
-}
-
-.todo-form-input {
+.todo-form-item {
   padding: 15px;
   margin: 5px;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   background-color: #303030;
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
+}
+
+.todo-input {
+  flex-grow: 1;
+}
+
+.calendar-icon {
+  display: true;
 }
 
 .MuiInputBase-input {
@@ -187,4 +185,8 @@ a.button {
 
 div.todo-completed {
   background-color: rgb(89, 89, 89);
+}
+
+.hidden {
+  display: none !important;
 }

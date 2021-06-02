@@ -1,13 +1,16 @@
-import React, { useState, useRef, useEffect } from "react";
-import ScheduleIcon from "@material-ui/icons/Schedule";
-import { IconButton, InputAdornment } from "@material-ui/core";
+import React, { useState, useRef } from "react";
+import DateRangeSharpIcon from "@material-ui/icons/DateRangeSharp";
+import ControlPointSharpIcon from "@material-ui/icons/ControlPointSharp";
+import { IconButton } from "@material-ui/core";
+import Input from "@material-ui/core/Input";
 import { DateTimePicker } from "@material-ui/pickers";
 import moment from "moment";
 
 function TodoForm({ addTask }) {
   const todoInput = useRef(null);
-  const [userInput, setUserInput] = useState("");
   const [date, setDate] = useState(moment());
+  const [userInput, setUserInput] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
   const handleChange = (e) => {
     setUserInput(e.currentTarget.value);
   };
@@ -19,33 +22,38 @@ function TodoForm({ addTask }) {
   };
 
   return (
-    <div className="todo-form-container">
+    <form onSubmit={handleSubmit}>
       <div className="todo-form-item">
-        <form className="todo-form-input" onSubmit={handleSubmit}>
-          <input
-            value={userInput}
-            type="text"
-            onChange={handleChange}
-            placeholder="Enter task..."
-            ref={todoInput}
+        <Input
+          className="todo-input"
+          value={userInput}
+          disableUnderline={true}
+          type="text"
+          onChange={handleChange}
+          placeholder="Enter task..."
+          ref={todoInput}
+        />
+
+        <DateTimePicker
+          className="hidden"
+          open={isOpen}
+          onOpen={() => setIsOpen(true)}
+          onClose={() => setIsOpen(false)}
+          value={date}
+          onChange={setDate}
+        />
+
+        <IconButton className="calendar-icon" onClick={() => setIsOpen(true)}>
+          <DateRangeSharpIcon style={{ color: "#5c5c5c" }} fontSize="large" />
+        </IconButton>
+        <IconButton type="submit">
+          <ControlPointSharpIcon
+            style={{ color: "#5c5c5c" }}
+            fontSize="large"
           />
-          <DateTimePicker
-            value={date}
-            onChange={setDate}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton>
-                    <ScheduleIcon style={{ color: "white" }} />
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
-          <button>Submit</button>
-        </form>
+        </IconButton>
       </div>
-    </div>
+    </form>
   );
 }
 
