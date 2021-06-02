@@ -17,7 +17,7 @@ function App() {
 
   const getTodos = () => {
     setLoading(true);
-    todosRef.orderBy("time").onSnapshot((querySnapshot) => {
+    todosRef.orderBy("time", "desc").onSnapshot((querySnapshot) => {
       const todos = [];
       querySnapshot.forEach((doc) => {
         console.log(doc.data().date.seconds);
