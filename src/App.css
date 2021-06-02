@@ -22,7 +22,7 @@ body {
   margin: 0;
   font-size: 1.6rem;
   color: gray;
-  background-color: grey;
+  background: black;
 }
 
 a {
@@ -54,6 +54,7 @@ a.button {
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
   background-color: rgb(31, 31, 31);
+  border-radius: 0 0 10px 10px;
 }
 
 .content img {
@@ -97,6 +98,7 @@ a.button {
   color: rgba(0, 0, 0, 0.5);
   padding: 1rem;
   max-height: 150px;
+  border-radius: 10px 10px 0 0;
 }
 
 /*
