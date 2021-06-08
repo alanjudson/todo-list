@@ -4,7 +4,13 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import configureFirebase from "./firebase_configs";
+import WebFont from "webfontloader";
 
+WebFont.load({
+  google: {
+    families: ["Open Sans", "Droid Serif", "Varela Round", "sans-serif"],
+  },
+});
 configureFirebase().then(async () => {
   render(<App />, document.getElementById("root"));
 });
