@@ -20,7 +20,6 @@ function App() {
     todosRef.orderBy("time", "desc").onSnapshot((querySnapshot) => {
       const todos = [];
       querySnapshot.forEach((doc) => {
-        console.log(doc.data().date.seconds);
         const date = doc.data().date.seconds * 1000;
         todos.push({
           id: doc.id,
@@ -39,8 +38,6 @@ function App() {
   }, []);
 
   const handleToggle = (id) => {
-    console.log(id);
-    console.log(todoList);
     todoList.map((task) => {
       return task.id === id ? updateValue(task) : { ...task };
     });
