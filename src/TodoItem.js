@@ -22,9 +22,8 @@ function TodoItem({ todo, handleFilter, handleToggle, deleteItem }) {
       ) : (
         <CheckCircleRoundedIcon fontSize="large" />
       )}
-
-      <div className={todo.completed ? "strike" : ""}>
-        {"  "} {todo.task} | {todo.date._d.toDateString()} {time}
+      <div className={todo.completed ? "item-text strike" : "item-text"}>
+        {"  "} {todo.task}
       </div>
       <IconButton
         onClick={(e) => {
@@ -34,6 +33,10 @@ function TodoItem({ todo, handleFilter, handleToggle, deleteItem }) {
       >
         <DeleteIcon className="delete-icon" fontSize="large" />
       </IconButton>
+      <div className="break">
+        <span className="dot"></span>
+        {todo.date._d.toDateString()} {time}
+      </div>
     </div>
   );
 }

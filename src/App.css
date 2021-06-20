@@ -133,17 +133,38 @@ a.button {
   flex: 1 1 auto;
 }
 
+.break {
+  flex-basis: 100%;
+  font-size: 1.3rem;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  margin-left: 3rem;
+}
+
+.dot {
+  height: 7px;
+  width: 7px;
+  background-color: rgb(100, 79, 113);
+  border-radius: 50%;
+  margin-right: 0.5rem;
+}
+
 .todo-item {
-  padding: 15px;
+  padding: 12px 15px;
   margin: 5px;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   background-color: #303030;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
 }
-
+.item-text {
+  margin-right: auto;
+  padding-left: 10px;
+}
 .todo-form-item {
   padding: 15px;
   margin: 5px;
@@ -203,4 +224,13 @@ div.todo-completed {
 
 .hidden {
   display: none !important;
+}
+
+.timepicker {
+  font-size: x-large;
+  background-color: red;
+}
+
+.sc-dNLxif .hoKmoI {
+  font-size: x-large;
 }
