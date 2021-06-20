@@ -71,6 +71,8 @@ function App() {
   };
 
   const addTask = (userInput, date) => {
+    date._d ? (date = date) : (date = moment(date));
+
     todosRef.doc().set({
       task: userInput,
       date: date._d,

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import DateRangeSharpIcon from "@material-ui/icons/DateRangeSharp";
 import ControlPointSharpIcon from "@material-ui/icons/ControlPointSharp";
 import { IconButton } from "@material-ui/core";
@@ -37,11 +37,13 @@ function TodoForm({ addTask }) {
         />
 
         <DateTimePicker
+          className="timepicker"
           style={{ display: "none" }}
           ref={timePicker}
           value={new Date(date)}
           onChange={(value) => setDate(moment(value))}
           hideLabel={true}
+          require={false}
         />
 
         <IconButton
