@@ -8,7 +8,9 @@ function TodoItem({ todo, handleFilter, handleToggle, deleteItem }) {
     e.preventDefault();
     handleToggle(id);
   };
-  const time = `${todo.date._d.getHours()}:${todo.date._d.getMinutes()}`;
+  const time = `${todo.date._d.getHours()}:${(
+    "0" + todo.date._d.getMinutes()
+  ).substr(-2)}`;
 
   return (
     <div
